@@ -1,5 +1,5 @@
 The Twelve Factor App :
-
+ 
 I. Codebase
 
 A twelve-factor app is always tracked in a version control system, such as Git, Mercurial, or Subversion. A copy of the revision tracking database is known as a code repository, often shortened to code repo or just repo.
@@ -51,3 +51,38 @@ A twelve-factor app never concerns itself with routing or storage of its output 
 XII. Admin processes
 
 A twelve-factor app never concerns itself with routing or storage of its output stream. It should not attempt to write to or manage logfiles. Instead, each running process writes its event stream, unbuffered, to stdout. During local development, the developer will view this stream in the foreground of their terminal to observe the app’s behavior.
+
+
+
+Atomic Design
+
+Atoms
+
+The smallest, indivisible building blocks (e.g., buttons, inputs, labels, icons).
+
+Basic HTML elements styled to fit design.
+
+Molecules
+
+Groups of atoms bonded together functioning as a unit (e.g., a search form with input + button).
+
+Simple UI components with defined behavior.
+
+Organisms
+
+Relatively complex components composed of molecules and/or atoms (e.g., header, footer, navigation bar).
+
+Standalone sections of an interface.
+
+Templates
+
+Page-level structures combining organisms into layouts.
+
+Focus on content structure and arrangement without final content.
+
+Pages
+
+Specific instances of templates with real content.
+
+Represent what the user will ultimately see.
+
