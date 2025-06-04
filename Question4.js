@@ -1,7 +1,7 @@
 // Function Approach
 let num=prompt("Enter a number")
 
-function square(num){
+const square=function (num){
     return num*num;
 }
 
