@@ -1,7 +1,7 @@
 // Write a function expression that takes in a number and returns its square.
 
 // Function Approach
-let num=prompt("Enter a number")
+let num=parseInt(prompt("Enter a number"))
 
 const square=function (num){
     if(isNaN(num)){
