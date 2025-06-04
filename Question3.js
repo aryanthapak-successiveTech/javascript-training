@@ -1,10 +1,10 @@
 // Function Approach
 
-function processCart(){
+const processCart=function (){
     console.log("Process the Cart");
 }
 
-function payment(processCart){
+const payment=function(processCart){
     processCart();
     console.log("Perform Payment");
 }

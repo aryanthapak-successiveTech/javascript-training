@@ -1,6 +1,6 @@
 let num=parseInt(prompt("Enter a number"));
 
-function checkEven(num){
+const checkEven=function(num){
     return num%2===0?"True":"False";
 }
 
