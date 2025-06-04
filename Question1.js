@@ -2,9 +2,9 @@
 
 
 //Function Based Approach
-let prevAns=undefined
+let prevAns;
 function rand(){
-    let newAns=undefined;
+    let newAns;
     do{
         newAns= Math.floor(Math.random() * 10) + 1;
     }while(prevAns===newAns)
