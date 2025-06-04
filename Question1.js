@@ -1,3 +1,6 @@
+// Write a program to give a random output between 1 to 10 (AC: 2 simultaneous answers could not be same)
+
+
 //Function Based Approach
 let prevAns=undefined
 function rand(){

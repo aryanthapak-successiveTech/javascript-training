@@ -1,3 +1,5 @@
+//Write a function expression that takes in another function as an argument
+
 // Function Approach
 
 const processCart=function (){
