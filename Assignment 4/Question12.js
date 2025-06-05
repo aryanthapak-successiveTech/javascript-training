@@ -12,17 +12,21 @@ const findIntersectionOfArrays = async () => {
   const arr2 = string2.split(",");
 
   const arr1Data = new Set(arr1);
-
+  const visited=new Set();
   if (arr1Data.size == 0) {
     console.log("Empty Array");
     return;
   }
 
   for (const ele of arr2) {
-    
-    if (arr1Data.has(ele)) {
+
+    if(arr1Data.has(ele) && !visited.has(ele)) {
       console.log(ele);
     }
+
+    visited.add(ele)
   }
+
+
 };
 findIntersectionOfArrays();
