@@ -4,33 +4,47 @@ const { takeInput, closeInput } = require("./Input");
 
 let num1, num2, operator;
 
+const isValid=(operator)=>{
+  if(operator=='+' || operator=='-' || operator=='*' || operator=='/'){
+    return true;
+  }
+
+  return false;
+}
+
 const add = (num1, num2) => {
-    return num1 + num2;
-  };
+  return num1 + num2;
+};
 
-  const subtract = (num1, num2) => {
-    return num1 - num2;
-  };
+const subtract = (num1, num2) => {
+  return num1 - num2;
+};
 
-  const multiply = (num1, num2) => {
-    return num1 * num2;
-  };
+const multiply = (num1, num2) => {
+  return num1 * num2;
+};
 
-  const divide = (num1, num2) => {
-    return num1 / num2;
-  };
+const divide = (num1, num2) => {
+  return num1 / num2;
+};
 
-
-const getInput = async () => {
+const calculator = async () => {
   num1 = parseInt(await takeInput("Enter a number "));
   num2 = parseInt(await takeInput("Enter a number "));
-  operator= await takeInput("Enter a operator from +,*,/,- ");
+  operator = await takeInput("Enter a operator from +,*,/,- ");
   closeInput();
 
-  if(isNaN(num1)||isNaN(num2)){
-    console.log("Enter a number");
+  if (isNaN(num1) || isNaN(num2)) {
+    console.error("Enter a number");
     return;
   }
+
+  if(!isValid(operator)){
+    console.error(`Expected operator from +,*,/,- you entered ${operator}`)
+    return;
+  }
+
+
 
   switch (operator) {
     case "+": {
@@ -49,7 +63,7 @@ const getInput = async () => {
     }
 
     case "/": {
-      if(num2==0){
+      if (num2 == 0) {
         console.error("Enter non 0 divisor");
       }
       console.log(divide(num1, num2));
@@ -62,4 +76,4 @@ const getInput = async () => {
   }
 };
 
-getInput();
+calculator();
