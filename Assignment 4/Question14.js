@@ -9,6 +9,10 @@ const reverseOfArray = async () => {
   let i = 0,
     j = arr.length - 1;
   while (i < j) {
+    if (isNaN(arr[i]) ||isNaN(arr[j])) {
+      console.log("Expected a number");
+      return;
+    }
     let temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
