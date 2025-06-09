@@ -2,19 +2,58 @@
 
 const { takeInput, closeInput } = require("./Input");
 
-const createDeepCopy = async () => {
-  try {
-    const inputObjectString = await takeInput("Enter a object : ");
-    closeInput();
-    const inputObject = JSON.parse(inputObjectString);
-    const deepCopyString = JSON.stringify(inputObject);
-    const deepCopy = JSON.parse(deepCopyString);
+const copyArray = (arr) => {
+  const copiedArr = [];
+  for (const obj of arr) {
+    if (typeof obj == "number") {
+      copiedArr.push(obj);
+    }
 
-    console.log(`Deep Copy = ${deepCopy}`);
-  } catch (err) {
-    console.error(err);
+    if (typeof obj == "object" && !(obj instanceof Array)) {
+      copiedArr.push(createObjectCopy(obj));
+    }
+
+    if (obj instanceof Array) {
+      copiedArr.push(copyArray(obj));
+    }
   }
+
+  return copiedArr;
 };
 
-createDeepCopy()
+const createObjectCopy = (inputObject) => {
+  const copyObject = {};
+  for (const key in inputObject) {
+    if (
+      typeof inputObject[key] == "number" ||
+      typeof inputObject[key] == "string"
+    ) {
+      copyObject[key] = inputObject[key];
+    }
+
+    if (typeof inputObject[key] == "function") {
+      copyObject[key] = inputObject[key].bind(copyObject);
+    }
+
+    if (inputObject[key] instanceof Array) {
+      copyObject[key] = copyArray(inputObject[key]);
+    }
+  }
+
+  return copyObject;
+};
+
+const createDeepCopy=async ()=>{
+    try{
+    const inputObject=await takeInput("Enter a object");
+    closeInput();
+    const deepCopy=createDeepCopy(inputObject);
+    return deepCopy;
+    }
+
+    catch(err){
+        console.log(err);
+    }
+  
+}
 
