@@ -1,3 +1,5 @@
+//3. Write a program to remove all the id key from array of object ({name:"John", age:27, id:1})
+
 const personsArray = [
   {
     name: "John",
