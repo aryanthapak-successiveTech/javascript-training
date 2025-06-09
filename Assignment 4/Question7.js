@@ -15,13 +15,14 @@ const duplicateElement = async () => {
     let ele = arr[i];
     if (!elementIndicesMap.has(ele)) {
       elementIndicesMap.set(ele, []);
+    } else {
+      elementIndicesMap.get(ele).push(i);
     }
-    elementIndicesMap.get(ele).push(i);
   }
 
   for (const [ele, indices] of elementIndicesMap.entries()) {
-    if (indices.length > 1) {
-      let res = `${ele} is present on`;
+    if (indices.length > 0) {
+      let res = `${ele} is also present on`;
       indices.forEach((element) => {
         res += " " + element + ",";
       });

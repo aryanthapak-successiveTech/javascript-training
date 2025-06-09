@@ -18,7 +18,7 @@ const LastDuplicateElement = async () => {
 
   for(let i=arr.length-1;i>=0;i--){
     if(elementCountMap.get(arr[i])>1 && !visited.has(arr[i])){
-        console.log(i);
+        console.log(`${arr[i]} is also present at ${i}`);
     }
 
     visited.add(arr[i]);
