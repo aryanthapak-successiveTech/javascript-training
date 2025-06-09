@@ -1,1 +1,1 @@
-.
+copyArray(obj)
