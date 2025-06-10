@@ -1,1 +1,0 @@
-copyArray(obj)

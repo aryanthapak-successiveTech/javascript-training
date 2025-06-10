@@ -43,17 +43,16 @@ const createObjectCopy = (inputObject) => {
   return copyObject;
 };
 
-const createDeepCopy=async ()=>{
-    try{
-    const inputObject=await takeInput("Enter a object");
+const createDeepCopy = async () => {
+  try {
+    let inputObject =JSON.parse(await takeInput("Enter a object : "));
     closeInput();
-    const deepCopy=createDeepCopy(inputObject);
+    const deepCopy = createDeepCopy(inputObject);
+    
     return deepCopy;
-    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-    catch(err){
-        console.log(err);
-    }
-  
-}
-
+createDeepCopy();
