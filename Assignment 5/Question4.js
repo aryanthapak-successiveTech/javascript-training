@@ -1,6 +1,5 @@
 //Write a program deepClone that takes an object as input and returns a deep copy of that object. The function should handle nested objects and arrays.
 
-
 const copyArray = (arr) => {
   const copiedArr = [];
   for (const obj of arr) {
@@ -34,29 +33,31 @@ const createObjectCopy = (inputObject) => {
       copyObject[key] = inputObject[key].bind(copyObject);
     }
 
-    if (inputObject[key] instanceof Array) {
+    if (Array.isArray(inputObject[key])) {
       copyObject[key] = copyArray(inputObject[key]);
     }
 
-    if(inputObject[key] instanceof Object){
-      copyObject[key]=createObjectCopy(inputObject[key])
+    if (
+      inputObject[key] instanceof Object &&
+      !Array.isArray(inputObject[key])
+    ) {
+      copyObject[key] = createObjectCopy(inputObject[key]);
     }
   }
 
   return copyObject;
 };
 
+const orignalCopy = {
+  a: 1,
+  b: {
+    c: 2,
+    d: [3, 4, 5],
+  },
+};
 
-const orignalCopy={
-  a:1,
-  b:{
-    c:2,
-    d:[3,4,5]
-  }
-}
-
-const createDeepCopy =(orignalCopy) => {
-  const deepCopy=createObjectCopy(orignalCopy);
+const createDeepCopy = (orignalCopy) => {
+  const deepCopy = createObjectCopy(orignalCopy);
   return deepCopy;
 };
 
