@@ -1,6 +1,5 @@
 //Write a program deepClone that takes an object as input and returns a deep copy of that object. The function should handle nested objects and arrays.
 
-const { takeInput, closeInput } = require("./Input");
 
 const copyArray = (arr) => {
   const copiedArr = [];
@@ -38,21 +37,27 @@ const createObjectCopy = (inputObject) => {
     if (inputObject[key] instanceof Array) {
       copyObject[key] = copyArray(inputObject[key]);
     }
+
+    if(inputObject[key] instanceof Object){
+      copyObject[key]=createObjectCopy(inputObject[key])
+    }
   }
 
   return copyObject;
 };
 
-const createDeepCopy = async () => {
-  try {
-    let inputObject =JSON.parse(await takeInput("Enter a object : "));
-    closeInput();
-    const deepCopy = createDeepCopy(inputObject);
-    
-    return deepCopy;
-  } catch (err) {
-    console.log(err);
+
+const orignalCopy={
+  a:1,
+  b:{
+    c:2,
+    d:[3,4,5]
   }
+}
+
+const createDeepCopy =(orignalCopy) => {
+  const deepCopy=createObjectCopy(orignalCopy);
+  return deepCopy;
 };
 
-createDeepCopy();
+console.log(createDeepCopy(orignalCopy));
