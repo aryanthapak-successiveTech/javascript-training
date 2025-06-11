@@ -56,7 +56,7 @@ const orignalCopy = {
   },
 };
 
-const createDeepCopy = (orignalCopy) => {
+const createDeepCopy = (orignalCopy) => { 
   const deepCopy = createObjectCopy(orignalCopy);
   return deepCopy;
 };

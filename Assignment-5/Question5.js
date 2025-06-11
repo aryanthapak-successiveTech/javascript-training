@@ -11,7 +11,7 @@ const obj = {
 };
 
 const flattenObject = (obj) => {
-  let ans = "{ ";
+  let ans = "{ ";  
 
   for (const key in obj) {
     if (typeof obj[key] == "number") {

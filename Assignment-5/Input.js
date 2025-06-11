@@ -16,3 +16,4 @@ exports.takeInput=(query)=>{
 exports.closeInput=()=>{
     prompt.close();
 }
+
