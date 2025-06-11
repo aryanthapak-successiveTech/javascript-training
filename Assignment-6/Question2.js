@@ -4,6 +4,10 @@
 
 class Shape {
   constructor(width, height) {
+      if(isNaN(height) || isNaN(base)){
+      console.error(`Enter proper integer values in width and height you entered height :${this.height} width : ${this.width}`)
+      return this;
+    }
     this.width = width;
     this.height = height;
   }
