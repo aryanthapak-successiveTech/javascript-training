@@ -5,6 +5,22 @@
 
 class Person {
   constructor(firstName, lastName, age) {
+    if(!firstName.match(/^[A-Za-z]+$/)){
+      console.error(`Enter a valid First Name only consisting with alphabets you entered ${firstName}`)
+      return this;
+    }
+
+    if(!lastName.match(/^[A-Za-z]+$/)){
+      console.error(`Enter a valid Last Name only consisting with alphabets you entered ${lastName}`)
+      return this;
+    }
+
+     if(isNaN(age) || age<0.5 ||age>100){
+      console.error(`Expected a valid age between 0.5 and 100`);
+      return this;
+    }
+    
+
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
@@ -20,15 +36,16 @@ class Person {
     for (const person of persons) {
       ageSum += person.age;
     }
-
     return ageSum / count;
   }
 }
 
 const person1 = new Person("Aryan","Thapak",32);
-const person2 = new Person("Mohit","Dale",21);
+const person2 = new Person("Mohit","Dale123",21);
 const person3 = new Person("Abhishek","Upmanyu",28);
 const persons=[person1,person2,person3];
-console.log(person1.fullName());
+for(const person of persons){
+  console.log(person.fullName())
+}
 
 console.log(`Average age of Persons are : ${Person.averageAge(persons)}`);

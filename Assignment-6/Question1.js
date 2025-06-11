@@ -9,13 +9,17 @@ class BankAccount {
   #balance = 0;
 
   deposit(amount) {
+    if(isNaN(amount)){
+      console.error(`Expected an number you entered ${amount}`);
+      return this;
+    }
     this.#balance += amount;
     return this;
   }
 
   withdraw(amount) {
     if (this.#balance - amount < 0) {
-      console.log(
+      console.error(
         `Transaction cannot be processed due to insufficient balance`
       );
       return this;

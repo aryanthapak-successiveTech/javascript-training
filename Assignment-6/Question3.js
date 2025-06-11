@@ -10,6 +10,15 @@
 
 class Person {
   constructor(name, age, gender, interesets) {
+    if(isNaN(age) || age<0.5 ||age>100){
+      console.error(`Expected a valid age between 0.5 and 100`);
+      return null;
+    }
+
+    if(gender!='M' && gender!='F'){
+      console.error(`chhoose a valid gender the available genders are M for male and F for Female`)
+      return null;
+    }
     this.name = name;
     this.age = age;
     this.gender = gender;

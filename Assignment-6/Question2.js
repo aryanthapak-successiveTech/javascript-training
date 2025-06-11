@@ -25,15 +25,20 @@ class Rectangle extends Shape {
 class Triangle extends Shape {
   constructor(height, base) {
     super(height, base);
+    this.base=base;
   }
 
   getArea() {
+     if(isNaN(this.height) || isNaN(this.base)){
+      console.error(`Enter proper integer values in width and height you entered height :${this.height} width : ${this.width}`)
+      return this;
+    }
     console.log(`Traingle area : ${(1 / 2) * this.height * this.base}`);
   }
 }
 
 const rectangle = new Rectangle(10, 11);
-const traingle = new Triangle(10, 5);
+const traingle = new Triangle(10, "A");
 
 rectangle.getArea();
 traingle.getArea();
