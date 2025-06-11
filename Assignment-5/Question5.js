@@ -7,7 +7,7 @@
 
 const obj = {
   a: 1,
-  b: { c: 2, d: [3,4] },
+  b: { c: 2, d: [3, 4] },
 };
 
 const flattenObject = (obj) => {
@@ -55,7 +55,7 @@ const combineObject = (oldKey, newObject) => {
 const arrayFlattenHandler = (oldKey, arr) => {
   let arrayAns = "";
   for (const idx in arr) {
-    let temp = oldKey+".";
+    let temp = oldKey + ".";
     if (typeof arr[idx] == "number") {
       arrayAns += `${temp}${idx}:${arr[idx]}`;
       if (idx < arr.length) {
@@ -63,10 +63,10 @@ const arrayFlattenHandler = (oldKey, arr) => {
       }
     }
 
-    if(arr[idx] instanceof Object){
-        let tempOldKey=`${oldKey}.${idx}`
-        console.log(tempOldKey);
-        arrayAns+=combineObject(tempOldKey,arr[idx]);
+    if (arr[idx] instanceof Object) {
+      let tempOldKey = `${oldKey}.${idx}`;
+      console.log(tempOldKey);
+      arrayAns += combineObject(tempOldKey, arr[idx]);
     }
   }
 
