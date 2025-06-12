@@ -7,39 +7,26 @@ class rateLimiter {
   }
 
   addInQueue(promiseFn) {
-    return new Promise((resolve, reject) => {
-      const run = async () => {
-        this.activeCount++;
-        try {
-          const result = await promiseFn();
-          resolve(result);
-        } catch (err) {
-          reject(err);
-        } finally {
-          this.activeCount--;
-          if (this.queue.length > 0 && this.activeCount < this.limit) {
-            const next = this.queue.shift();
-            next();
-          }
-        }
+    this.queue.push(promiseFn);
+  }
 
-        if (this.activeCount <=this.limit) {
-          run();
-        } else {
-          this.queue.push(run);
-        }
-      };
-    });
+  popFromQueue(){
+    const arr=[];
+    let tempLimit=this.limit;
+    while(tempLimit-- && this.queue.length>0){
+      arr.push(this.queue.shift());
+    }
+
+    return arr;
   }
 }
+
 
 const task = function (taskId, delay) {
   return new Promise((resolve, reject) => {
     console.log(`Task ${taskId} started`);
-    const prevDate=new Date().getTime();
     setTimeout(() => {
       console.log(`Task ${taskId} ended`);
-      console.log(new Date().getTime()-prevDate);
       resolve(taskId);
     },2000);
   });
@@ -47,8 +34,13 @@ const task = function (taskId, delay) {
 
 const limiter = new rateLimiter(3);
 
+for(let i=1;i<10;i++){
+  limiter.addInQueue(task(i));
+}
 
-
-for (let i = 1; i < 10; i++) {
-  limiter.addInQueue(task(i).then(console.log));
+while(limiter.queue.length>0){
+  const reqs=limiter.popFromQueue();
+  Promise.all(reqs).then((data)=>{
+    console.log(data);
+  })
 }
