@@ -4,14 +4,16 @@
 const fetchUrl = "https://api.github.com/users/Aryanthapak1";
 
 const fetchData = async (url) => {
-  const res = await fetch(url);
-  const data = await res.json();
-  console.log(data);
-  setTimeout(() => {
-    console.log(`Data fetched successfully`);
-  }, 1000);
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data);
+    setTimeout(() => {
+      console.log(`Data fetched successfully`);
+    }, 1000);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 fetchData(fetchUrl);
-
-

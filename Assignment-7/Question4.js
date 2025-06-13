@@ -1,46 +1,41 @@
 //Write a program to implement a Promise-based rate limiter, that limits the number of concurrent requests to a certain number
-class rateLimiter {
+class RateLimiter {
   constructor(limit) {
     this.limit = limit;
     this.queue = [];
     this.activeCount = 0;
   }
 
-  addInQueue(promiseFn) {
-    this.queue.push(promiseFn);
-  }
-
-  popFromQueue(){
-    const arr=[];
-    let tempLimit=this.limit;
-    while(tempLimit-- && this.queue.length>0){
-      arr.push(this.queue.shift());
+  schedule=async function(promiseFn) {
+    if (this.queue.length < this.limit) {
+      this.activeCount++;
+      this.queue.push(promiseFn);
     }
 
-    return arr;
+    if (this.activeCount <= this.limit) {
+      const pendingTask = this.queue.shift();
+      const performTask=await pendingTask;
+      console.log(performTask);
+       this.activeCount--;
+    }
   }
 }
-
 
 const task = function (taskId, delay) {
   return new Promise((resolve, reject) => {
-    console.log(`Task ${taskId} started`);
-    setTimeout(() => {
-      console.log(`Task ${taskId} ended`);
-      resolve(taskId);
-    },2000);
+    try {
+      setTimeout(() => {
+        console.log(`Task ${taskId} ended`);
+        resolve(taskId);
+      }, delay);
+    } catch (err) {
+      reject(err);
+    }
   });
 };
 
-const limiter = new rateLimiter(3);
+const limiter = new RateLimiter(5);
 
-for(let i=1;i<10;i++){
-  limiter.addInQueue(task(i));
-}
-
-while(limiter.queue.length>0){
-  const reqs=limiter.popFromQueue();
-  Promise.all(reqs).then((data)=>{
-    console.log(data);
-  })
+for (let i = 1; i < 10; i++) {
+  limiter.schedule(task(i,2000));
 }

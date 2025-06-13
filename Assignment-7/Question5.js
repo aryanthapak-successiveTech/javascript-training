@@ -7,21 +7,19 @@ class TaskQueue {
     this.activeLimit = 0;
   }
 
-  addInQueue(promiseFn, priority) {
-    addTask(this.queue, promiseFn, priority);
-  }
-
-  popFromQueue() {
-    const arr = [];
-    let tempLimit = this.limit;
-
-    while (tempLimit-- && this.queue.length > 0) {
-      arr.push(this.queue.shift().task);
-     
+  schedule = async function (promiseFn, taskPriority) {
+    if (this.queue.length < this.limit) {
+      this.activeCount++;
+      addTask(this.queue, promiseFn, taskPriority);
     }
-    
-    return arr;
-  }
+
+    if (this.activeLimit <= this.limit) {
+      const pendingTask = this.queue.shift().task;
+      const performTask = await pendingTask;
+      console.log(performTask);
+      this.activeCount--;
+    }
+  };
 }
 
 const priortyMap = {
@@ -41,26 +39,23 @@ const addTask = (tasks, task, taskPriority) => {
   sortQueueOnPriority(tasks);
 };
 
-const task = async (id) => {
+const task = function (taskId, delay) {
   return new Promise((resolve, reject) => {
-    console.log(`Task ${id} started`);
-    setTimeout(() => {
-      console.log(`Task ${id} ended`);
-      resolve(id);
-    }, 1000);
+    try {
+      setTimeout(() => {
+        console.log(`Task ${taskId} ended`);
+        resolve(taskId);
+      }, delay);
+    } catch (err) {
+      reject(err);
+    }
   });
 };
 
 const taskQueue = new TaskQueue(3);
 
-taskQueue.addInQueue(task(1), "High");
-taskQueue.addInQueue(task(2), "Low");
-taskQueue.addInQueue(task(3), "High");
-taskQueue.addInQueue(task(4), "Mid");
-taskQueue.addInQueue(task(5), "Low");
-
-
-while (taskQueue.queue.length > 0) {
-  const reqs=taskQueue.popFromQueue();
-  Promise.all(reqs).then((results) => console.log(results));
-}
+taskQueue.schedule(task(1, 2000), "High");
+taskQueue.schedule(task(2, 1000), "Low");
+taskQueue.schedule(task(3, 2000), "High");
+taskQueue.schedule(task(4, 3000), "Mid");
+taskQueue.schedule(task(5, 2000), "Low");

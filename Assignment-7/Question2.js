@@ -37,10 +37,10 @@ const applicationOrderHandler = (
         if (tokenVerified) {
           showProfile();
         } else {
-          console.log("Not a valid Token");
+          console.error("Not a valid Token");
         }
       } else {
-        console.log("Wrong Information entered by user");
+        console.error("Wrong Information entered by user");
       }
     }
   }
