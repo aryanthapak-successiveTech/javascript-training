@@ -1,38 +1,26 @@
 //Write a program to implement a Promise-based task queue, that processes tasks in a specified order, with a specified concurrency limit
 
-class RateLimiter {
+class TaskQueue {
   constructor(limit) {
     this.queue = [];
     this.limit = limit;
     this.activeLimit = 0;
   }
 
-  addInQueue(promiseFn,priority) {
-    addTask(this.queue,promiseFn,priority);
-    console.log(this.queue)
-    return new Promise((resolve, reject) => {
-      const run = async () => {
-        this.activeCount++;
-        try {
-          const result = await promiseFn();
-          resolve(result);
-        } catch (err) {
-          reject(err);
-        } finally {
-          this.activeCount--;
-          if (this.queue.length > 0 && this.activeCount < this.limit) {
-            const next = this.queue.shift();
-            next();
-          }
-        }
+  addInQueue(promiseFn, priority) {
+    addTask(this.queue, promiseFn, priority);
+  }
 
-        if (this.activeCount <= this.limit) {
-          run();
-        } else {
-          this.queue.push(run);
-        }
-      };
-    });
+  popFromQueue() {
+    const arr = [];
+    let tempLimit = this.limit;
+
+    while (tempLimit-- && this.queue.length > 0) {
+      arr.push(this.queue.shift().task);
+     
+    }
+    
+    return arr;
   }
 }
 
@@ -48,24 +36,32 @@ const sortQueueOnPriority = (tasks) => {
   });
 };
 
-
 const addTask = (tasks, task, taskPriority) => {
   tasks.push({ task, taskPriority });
   sortQueueOnPriority(tasks);
 };
 
-const task=async(id)=>{
-  return new Promise((resolve,reject)=>{
+const task = async (id) => {
+  return new Promise((resolve, reject) => {
     console.log(`Task ${id} started`);
-    setTimeout(()=>{
+    setTimeout(() => {
       console.log(`Task ${id} ended`);
       resolve(id);
-    },1000)
-  })
+    }, 1000);
+  });
+};
+
+const taskQueue = new TaskQueue(3);
+
+taskQueue.addInQueue(task(1), "High");
+taskQueue.addInQueue(task(2), "Low");
+taskQueue.addInQueue(task(3), "High");
+taskQueue.addInQueue(task(4), "Mid");
+taskQueue.addInQueue(task(5), "Low");
+
+
+while (taskQueue.queue.length > 0) {
+  const reqs=taskQueue.popFromQueue();
+  Promise.all(reqs).then((results) => console.log(results));
 }
 
-const rateLimiter=new RateLimiter(3);
-
-rateLimiter.addInQueue(task(1),"High");
-rateLimiter.addInQueue(task(3),"Low");
-rateLimiter.addInQueue(task(2),"High");
