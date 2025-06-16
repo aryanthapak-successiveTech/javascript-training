@@ -5,7 +5,7 @@ const fetchUrl="https://api.github.com/users/Aryanthapak1";
 const fetchAndShowData = (url, cb) => {
   fetch(url)
     .then((res) => res.json())
-    .then((data) => cb(data)).catch(err=>console.log(err));
+    .then((data) => cb(data)).catch(err=>console.error(err));
 };
 
 const showData = (data) => {

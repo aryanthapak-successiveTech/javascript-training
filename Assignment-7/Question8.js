@@ -11,7 +11,7 @@ const fetchData = async (url) => {
   return data;
 };
 const fetchFromMultiUrls = async (url1, url2, url3) => {
-  const combinedResults = await Promise.all([
+  const combinedResults = await Promise.allSettled([
     fetchData(url1),
     fetchData(url2),
     fetchData(url3),
