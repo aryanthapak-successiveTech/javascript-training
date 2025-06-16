@@ -21,7 +21,6 @@ class RateLimiter {
   }
 }
 
-
 const task = function (taskId, delay) {
   return new Promise((resolve, reject) => {
     try {
@@ -39,11 +38,4 @@ const limiter = new RateLimiter(5);
 
 for (let i = 1; i < 10; i++) {
   limiter.schedule(task(i,2000));
-}
-
-while(limiter.queue.length>0){
-  const reqs=limiter.popFromQueue();
-  Promise.all(reqs).then((data)=>{
-    console.log(data);
-  })
 }
